@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-import numpy as np
 
 app = Flask(__name__)
 
@@ -15,7 +14,7 @@ def predict():
         data = request.get_json()
         input_data = pd.DataFrame(data, index=[0])
 
-        numerical_columns = input_data.select_dtypes(include=[np.number]).columns
+        numeric_columns = input_data.select_dtypes(include=['int64', 'float64']).columns
         categorical_columns = input_data.select_dtypes(include=['object']).columns
 
         label_encoder = LabelEncoder()
